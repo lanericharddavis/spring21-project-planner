@@ -3,7 +3,6 @@
     <h1>Welcome {{ account.name }}</h1>
     <img class="rounded" :src="account.picture" alt="" />
     <p>{{ account.email }}</p>
-
     <form @submit.prevent="create">
       <div class="form-group">
         <label for="title">Title</label>

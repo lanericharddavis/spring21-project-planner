@@ -23,6 +23,11 @@ class ProjectsService {
     router.push({ name: 'ProjectDetails', params: { id: res.data.id } })
     // this.getAll()
   }
+
+  async addPhoto(projectId, photo) {
+    await api.post(`api/projects/${projectId}/photos`, photo)
+    this.getActive(projectId)
+  }
 }
 
 export const projectsService = new ProjectsService()
