@@ -8,5 +8,7 @@ export const AppState = reactive({
   account: {},
   projects: [],
   activeProject: null,
-  myProjects: []
+  myProjects: [],
+  activeProjects: [],
+  activeProfile: null
 })

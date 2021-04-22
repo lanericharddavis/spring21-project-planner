@@ -1,9 +1,20 @@
 <template>
-  <div class="about text-center">
-    <h1>Welcome {{ account.name }}</h1>
-    <img class="rounded" :src="account.picture" alt="" />
-    <p>{{ account.email }}</p>
-    <form @submit.prevent="create">
+  <div class="about text-center" v-if="state.activeProfile">
+    <!-- Render the active profile picture and name -->
+    <div class="col-12 project-header">
+      <div class="d-flex">
+        <img class="rounded-circle" :src="state.activeProfile.picture" alt="Creator image">
+        <div class="ml-3 d-flex flex-column justify-content-center">
+          <h3 class="text-secondary">
+            {{ state.activeProfile.name }}
+          </h3>
+          <h3 class="m-0">
+            Projects: {{ state.activeProjects.length }}
+          </h3>
+        </div>
+      </div>
+    </div>
+    <form @submit.prevent="create" v-if="state.user.isAuthenticated && state.activeProfile.id === state.account.id">
       <div class="form-group">
         <label for="title">Title</label>
         <input type="text"
@@ -30,27 +41,38 @@
     </form>
     <h2>My Projects</h2>
     <div class="row">
-      <ProjectPhoto v-for="project in state.myProjects" :key="project.id" :project="project" />
+      <ProjectPhoto v-for="project in state.activeProjects" :key="project.id" :project="project" />
     </div>
   </div>
 </template>
 
 <script>
-import { computed, reactive } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { projectsService } from '../services/ProjectsService'
+import { accountService } from '../services/AccountService'
 import Notification from '../utils/Notification'
 import { logger } from '../utils/Logger'
+import { useRoute } from 'vue-router'
 export default {
   name: 'Account',
   setup() {
+    const route = useRoute()
     const state = reactive({
       newProject: {},
-      myProjects: computed(() => AppState.myProjects)
+      account: computed(() => AppState.account),
+      user: computed(() => AppState.user),
+      activeProjects: computed(() => AppState.activeProjects),
+      activeProfile: computed(() => AppState.activeProfile)
     })
+
+    onMounted(async() => {
+      await projectsService.getByProfileId(route.params.id)
+      await accountService.getProfile(route.params.id)
+    })
+
     return {
       state,
-      account: computed(() => AppState.account),
       async create() {
         try {
           await projectsService.create(state.newProject)

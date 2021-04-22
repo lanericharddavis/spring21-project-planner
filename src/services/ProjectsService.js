@@ -18,6 +18,11 @@ class ProjectsService {
     AppState.myProjects = res.data
   }
 
+  async getByProfileId(id) {
+    const res = await api.get(`api/projects?creatorId=${id}`)
+    AppState.activeProjects = res.data
+  }
+
   async create(data) {
     const res = await api.post('api/projects', data)
     router.push({ name: 'ProjectDetails', params: { id: res.data.id } })

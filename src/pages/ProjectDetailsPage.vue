@@ -4,7 +4,9 @@
     <div class="row mt-3">
       <div class="col-12 project-header">
         <div class="d-flex">
-          <img class="rounded-circle" :src="state.project.creator.picture" alt="Creator image">
+          <router-link :to="{name: 'Account', params: {id: state.project.creator.id}}">
+            <img class="rounded-circle" :src="state.project.creator.picture" alt="Creator image">
+          </router-link>
           <div class="ml-3 d-flex flex-column justify-content-center">
             <h3 class="text-secondary">
               {{ state.project.creator.name }}

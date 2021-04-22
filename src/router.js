@@ -1,4 +1,3 @@
-import { authGuard } from '@bcwdev/auth0provider-client'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 function loadPage(page) {
@@ -23,11 +22,11 @@ const routes = [
 
   },
   {
-    path: '/account',
+    path: '/profile/:id',
     name: 'Account',
-    component: loadPage('AccountPage'),
+    component: loadPage('AccountPage')
     // NOTE this line prevents the user from loading this page if they are not loggedin
-    beforeEnter: authGuard
+    // beforeEnter: authGuard
   }
 ]
 
