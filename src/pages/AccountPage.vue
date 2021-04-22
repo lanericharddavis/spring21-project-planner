@@ -29,6 +29,10 @@
         Create
       </button>
     </form>
+    <h2>My Projects</h2>
+    <div class="row">
+      <ProjectPhoto v-for="project in state.myProjects" :key="project.id" :project="project" />
+    </div>
   </div>
 </template>
 
@@ -42,7 +46,8 @@ export default {
   name: 'Account',
   setup() {
     const state = reactive({
-      newProject: {}
+      newProject: {},
+      myProjects: computed(() => AppState.myProjects)
     })
     return {
       state,

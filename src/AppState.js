@@ -5,6 +5,8 @@ export const AppState = reactive({
   // NOTE user is Auth0Profile
   user: {},
   // NOTE Account is Api Profile
-  account: {},
-  projects: []
+  account: null,
+  projects: [],
+  activeProject: null,
+  myProjects: []
 })

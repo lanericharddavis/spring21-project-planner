@@ -1,11 +1,13 @@
 <template>
   <div class="project-photo col-md-3">
     <div class=" position-relative">
-      <img :src="project.imgUrl" alt="Project Cover Image">
-      <img class="rounded-circle small-img position-absolute" :src="project.creator.picture" alt="Creator Photo">
-      <div class="text-left">
-        <h4>{{ project.title }}</h4>
-      </div>
+      <router-link :to="{name: 'ProjectDetails', params: {id: project.id}}">
+        <img :src="project.imgUrl" alt="Project Cover Image">
+        <img class="rounded-circle small-img position-absolute" :src="project.creator.picture" alt="Creator Photo">
+        <div class="text-left">
+          <h4>{{ project.title }}</h4>
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -21,8 +23,7 @@ export default {
   },
   setup() {
     return {}
-  },
-  components: {}
+  }
 }
 </script>
 
